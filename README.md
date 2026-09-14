@@ -23,7 +23,7 @@ MSER 기반 간판 문자 saliency로 대표 프레임을 고릅니다.
 > 순서를 반대로 두면 실내에서 방문한 장소가 "품질 미달"로 통째로 사라집니다.
 > → [설계 근거와 실패했던 시도들](https://github.com/chaejoon23/Bin_pind/blob/main/docs/vision-frontend.md)
 
-#### 🔍 [dinov3-image-search](https://github.com/chaejoon23/DINOv3-image-similarity-search-system-TEST) — 표현학습
+#### 🔍 [dinov3-image-search](https://github.com/chaejoon23/dinov3-image-search) — 표현학습
 거리 사진 한 장으로 같은 장소를 찾는 검색. DINOv3 자기지도 특징을 384차원으로 뽑아
 코사인 유사도로 검색합니다. 후쿠오카 거리영상에는 GPS·촬영시각·방위가 붙어 있어
 검색 결과가 곧 위치 추정이 됩니다.
@@ -45,7 +45,7 @@ Flutter · TensorFlow Lite · MobileNetV2.
 |---|---|
 | **논문** | 「한국어 형태소 정규화와 복잡도 기반의 라우팅을 이용한 품질 검증형 LLM API 비용 최적화 프록시」<br>한국디지털콘텐츠학회 2026 하계종합학술대회 대학생논문경진대회 **은상** · 제1저자 → [논문 · 실험 하네스 · 대시보드](https://github.com/chaejoon23/minT) |
 | **특허** | 「영상 콘텐츠 기반의 여행 정보 제공 방법 및 시스템」 (출원) |
-| **수상** | 백석대 창업경진대회 대상 · 충남 RISE 대학 연합 창업경진대회 최우수상 |
+| **수상·선정** | 백석대 창업경진대회 대상 · 충남 RISE 대학 연합 창업경진대회 최우수상<br>모두의 창업 프로젝트 1기 **1차 1라운드 통과** — 창업활동자금 200만원 (Pind) |
 | **개발** | BoothUP — 팝업 참가기업 모집 B2B 플랫폼 메인 개발자 (운영 중)<br>로보틱스·자율주행 교육 콘텐츠, 딥러닝 강의자료 제작 |
 
 논문 주제는 LLM이지만 문제는 같았습니다 — **제약 조건 아래에서 모델을 실제로 굴리는 일.**
