@@ -1,0 +1,64 @@
+## 채준 (JUN)
+
+카메라에 들어가는 AI를 만들고 싶습니다. ISP · 화질 개선 · 온디바이스 비전.
+
+학부 마지막 학기에는 **"기기가 실제로 읽을 수 있는 이미지를 만드는 일"**을 세 방향에서
+붙잡고 있습니다 — 프레임의 화질을 보고 고르는 쪽, 이미지를 벡터로 바꿔 장소를 찾는 쪽,
+그 모델을 휴대폰에 올리는 쪽.
+
+---
+
+### 지금 하는 것
+
+#### 🎞 [Bin_pind](https://github.com/chaejoon23/Bin_pind) — 화질·ISP
+영상 속 장소를 지도로 옮기는 서비스. 그중 오래 붙잡은 부분은 **VLM 앞단의 비전
+프론트엔드**입니다. 1 fps로 뽑은 프레임을 그대로 멀티모달 모델에 넘기면 대부분이
+중복이고, 실내에서 찍힌 간판은 어둠에 잠겨 못 읽힙니다. 중복은 장면 임베딩으로 접고,
+어두운 프레임은 sRGB 미니 ISP로 복원해서 넘깁니다.
+
+화이트밸런스(Shades-of-Gray) → 적응 감마 → 조건부 NL-Means → LAB CLAHE → 조건부 언샤프.
+MSER 기반 간판 문자 saliency로 대표 프레임을 고릅니다.
+
+> 저조도 복원을 화질 게이트보다 **앞에** 둬야 한다는 걸 프레임을 잃어보고 알았습니다.
+> 순서를 반대로 두면 실내에서 방문한 장소가 "품질 미달"로 통째로 사라집니다.
+> → [설계 근거와 실패했던 시도들](https://github.com/chaejoon23/Bin_pind/blob/main/docs/vision-frontend.md)
+
+#### 🔍 [dinov3-image-search](https://github.com/chaejoon23/DINOv3-image-similarity-search-system-TEST) — 표현학습
+거리 사진 한 장으로 같은 장소를 찾는 검색. DINOv3 자기지도 특징을 384차원으로 뽑아
+코사인 유사도로 검색합니다. 후쿠오카 거리영상에는 GPS·촬영시각·방위가 붙어 있어
+검색 결과가 곧 위치 추정이 됩니다.
+
+> 처음 구현에서 사전학습 가중치를 로드하지 않고 있었는데도 데모가 "돌아가는 것처럼"
+> 보였습니다. 랜덤 초기화 ViT도 저수준 구조는 보존하기 때문입니다. 무작위 기대값을
+> 기준선으로 깔고 Precision@k를 재서 확인했습니다.
+
+#### 📱 [autofoto](https://github.com/chaejoon23/autofoto) — 온디바이스 배포
+사진 분류를 서버에 올리지 않고 휴대폰에서 직접 추론합니다. 모델은 앱에 박아두지 않고
+실행 중에 목록을 받아 고르고 내려받아, 스토어 심사 없이 교체할 수 있게 만들었습니다.
+Flutter · TensorFlow Lite · MobileNetV2.
+
+---
+
+### 해온 것
+
+| | |
+|---|---|
+| **논문** | 「한국어 형태소 정규화와 복잡도 기반의 라우팅을 이용한 품질 검증형 LLM API 비용 최적화 프록시」<br>한국디지털콘텐츠학회 2026 하계종합학술대회 대학생논문경진대회 **은상** · 제1저자 → [논문 · 실험 하네스 · 대시보드](https://github.com/chaejoon23/minT) |
+| **특허** | 「영상 콘텐츠 기반의 여행 정보 제공 방법 및 시스템」 (출원) |
+| **수상** | 백석대 창업경진대회 대상 · 충남 RISE 대학 연합 창업경진대회 최우수상 |
+| **개발** | BoothUP — 팝업 참가기업 모집 B2B 플랫폼 메인 개발자 (운영 중)<br>로보틱스·자율주행 교육 콘텐츠, 딥러닝 강의자료 제작 |
+
+논문 주제는 LLM이지만 문제는 같았습니다 — **제약 조건 아래에서 모델을 실제로 굴리는 일.**
+비용 상한 안에서 질의를 어느 모델로 보낼지 고르는 문제를 다뤘고, 그 관심이 기기 안에서
+돌아가야 하는 화질 모델로 이어졌습니다.
+
+---
+
+### 쓰는 것
+
+**비전·AI** OpenCV · NumPy · PyTorch · TensorFlow Lite · DINOv3 · Gemini · faster-whisper
+**백엔드** FastAPI · SQLAlchemy 2.0 · PostgreSQL + PostGIS · Supabase
+**프론트·앱** TypeScript · Next.js · React · Flutter
+**품질** ruff(ANN) · mypy strict · pytest · pre-commit
+
+📫 chaejoon23@gmail.com
